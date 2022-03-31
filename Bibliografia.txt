@@ -1,0 +1,47 @@
+1. https://www.trojansource.codes
+2. https://certitude.consulting/blog/en/invisible-backdoor/
+3. https://code.visualstudio.com/updates/v1_62#_unicode-directional-formatting-characters
+4. https://www.python.org/dev/peps/pep-0672/
+5. https://www.unicode.org/reports/tr36/    (Unicode Technical Report #36: Unicode Security Considerations)
+6. https://www.unicode.org/reports/tr39/    (Unicode® Technical Standard #39: Unicode Security Mechanisms)
+7. https://portswigger.net/daily-swig/smuggling-hidden-backdoors-into-javascript-with-homoglyphs-and-invisible-unicode-characters
+8. https://www.unicode.org/versions/Unicode14.0.0/UnicodeStandard-14.0.pdf    (dokumentacja Unicode)
+9. https://unicode.org/reports/tr9/    (UNICODE BIDIRECTIONAL ALGORITHM)
+10. https://www.w3.org/International/questions/qa-bidi-unicode-controls    (World Wide Web Consortium)
+11. https://github.blog/changelog/2021-10-31-warning-about-bidirectional-unicode-text/
+12. https://community.ibm.com/community/user/security/blogs/gladys-koskas1/2022/01/28/homoglyph-detection-with-qradar
+
+https://ieeexplore.ieee.org/document/8367634
+https://d3fend.mitre.org/technique/d3f:HomoglyphDetection/
+
+
+--------------------
+Za słabe na naukowe źródła, ale dla inspiracji:
+https://blog.malwarebytes.com/exploits-and-vulnerabilities/2021/11/trojan-source-hiding-malicious-code-in-plain-sight/
+https://www.pythonpool.com/remove-unicode-characters-python/
+
+
+--------------------
+Strzeszczenie
+  
+Wstęp
+  
+	- ogólne
+	- niebezpieczeństwo dla open source
+Unicode 
+  1., 8.
+	- opis teoretyczny
+Ataki przy pomocy BIDI
+  1., 8. (s.248), 9.
+	- 3 przykłady użycia w Pythonie
+Ataki przy pomocy homoglifów
+  2., 5., 8. (s.245)
+	- w kodzie np. podmieniony wykrzyknik
+	- podstępny URL 3:)
+Przegląd dostępnych rozwiązań
+  3., 6., 11., 12.
+	- github, visual studio itp. wprowadziły rozwiązania
+Opis naszego narzędzia
+  https://codebox.net/pages/homoglyph-detection, https://github.com/codebox/homoglyph
+  https://maxhalford.github.io/blog/homoglyphs/
+  
