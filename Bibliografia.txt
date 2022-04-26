@@ -10,6 +10,7 @@
 10. https://www.w3.org/International/questions/qa-bidi-unicode-controls    (World Wide Web Consortium)
 11. https://github.blog/changelog/2021-10-31-warning-about-bidirectional-unicode-text/
 12. https://community.ibm.com/community/user/security/blogs/gladys-koskas1/2022/01/28/homoglyph-detection-with-qradar
+13. https://about.gitlab.com/releases/2021/10/28/security-release-gitlab-14-4-1-released/
 
 https://ieeexplore.ieee.org/document/8367634
 https://d3fend.mitre.org/technique/d3f:HomoglyphDetection/
@@ -39,8 +40,8 @@ Ataki przy pomocy homoglifów
 	- w kodzie np. podmieniony wykrzyknik
 	- podstępny URL 3:)
 Przegląd dostępnych rozwiązań
-  3., 6., 11., 12.
-	- github, visual studio itp. wprowadziły rozwiązania
+  3., 6., 11., 12., 13.
+	- github, gitlab, visual studio itp. wprowadziły rozwiązania
 Opis naszego narzędzia
   https://codebox.net/pages/homoglyph-detection, https://github.com/codebox/homoglyph
   https://maxhalford.github.io/blog/homoglyphs/
