@@ -42,6 +42,7 @@ Ataki przy pomocy homoglifów
 Przegląd dostępnych rozwiązań
   3., 6., 11., 12., 13.
 	- github, gitlab, visual studio itp. wprowadziły rozwiązania
+	- przykład gitlab https://gitlab.com/dcouture/public_project/-/blob/branch/CommentingOut.java
 Opis naszego narzędzia
   https://codebox.net/pages/homoglyph-detection, https://github.com/codebox/homoglyph
   https://maxhalford.github.io/blog/homoglyphs/
