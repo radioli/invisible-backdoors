@@ -1,39 +1,45 @@
 import re
 import sys
-list_of_signs=['\n','\u202A', '\u202B', '\u202D', '\u202E', '\u2066', '\u2067', '\u2068', '\u202C', '\u2069']
-def search_for_signs(signs:list, input_data:str)->None:
+
+
+def search_for_signs(input_data: str) -> None:
     found_signs = []
-    token_specification= [
+    token_specification = [
         ('U_202E',   '\u202E'),
-        ('U_202A',   '\u202A'), 
-        ('U_202B',   '\u202B'), 
-        ('U_202D',   '\u202D'), 
-        ('U_2066',   '\u2066'), 
-        ('U_2067',   '\u2067'), 
-        ('U_2068',   '\u2068'), 
+        ('U_202A',   '\u202A'),
+        ('U_202B',   '\u202B'),
+        ('U_202D',   '\u202D'),
+        ('U_2066',   '\u2066'),
+        ('U_2067',   '\u2067'),
+        ('U_2068',   '\u2068'),
         ('U_202C',   '\u202C'),
-        ('U_2069',   '\u2069'),    
-        ('NEWLINE',  r'\n')                 
+        ('U_2069',   '\u2069'),
+        ('NEWLINE',  r'\n')
     ]
     line_number = 1
     line_start = 0
     tok_regex = '|'.join('(?P<%s>%s)' % pair for pair in token_specification)
     for match in re.finditer(tok_regex, input_data):
-        column = match.start() - line_start +1
+        column = match.start() - line_start + 1
         type_of_token = match.lastgroup
         if(type_of_token == 'NEWLINE'):
             line_start = match.end()
-            line_number+=1
+            line_number += 1
         else:
-            found_signs.append({'token_type':type_of_token, 'line_number':line_number,'column':column})
+            found_signs.append(
+                {'token_type': type_of_token, 'line_number': line_number, 'column': column})
     return found_signs
-def load_file(file_name:str):
+
+
+def load_file(file_name: str):
     with open(file_name, 'r', encoding='utf-8') as f:
         content = f.read()
         return content
-def load_homoglyphs_dict()->dict:
-    #characters: abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-.
-    dict_of_homoglyphs ={
+
+
+def load_homoglyphs_dict() -> dict:
+    # characters: abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-.
+    dict_of_homoglyphs = {
         "-": ["\\u06d4", "\\u2cba", "\\ufe58", "\\u02d7", "\\u2212", "\\u2796", "\\u2011", "\\u2043", "\\u2012", "\\u2013", "\\u2010"],
         ".": ["\\u0701", "\\u0660", "\\u2024", "\\u06f0", "\\ua60e", "\\ua4f8", "\\u0702", "\\u10a50", "\\uff0e", "\\u1d16d"],
         "0": ["\\u1d476", "\\u0585", "\\u004f", "\\ufbaa", "\\u1d4aa", "\\u06be", "\\u1d70e", "\\u09e6", "\\u0d02", "\\u1d4de", "\\ufee9", "\\u1d630", "\\u06c1", "\\u1ee24", "\\u1d45c", "\\u0a66", "\\u1d7bc", "\\u0c02", "\\u10ff", "\\u1d490", "\\u1d5c8", "\\u0d82", "\\uff4f", "\\u1d744", "\\u0d20", "\\u1d5fc", "\\ufba6", "\\u0c66", "\\u102ab", "\\u1d11", "\\u0665", "\\ufbab", "\\u1d6d0", "\\u1d7b8", "\\u118c8", "\\u104c2", "\\u1d546", "\\uff10", "\\u1d442", "\\u039f", "\\u10292", "\\u1d79e", "\\ufeec", "\\u1d7ce", "\\u1d782", "\\u1d6d4", "\\u06f5", "\\ufbad", "\\ua4f3", "\\ufeeb", "\\u1ee64", "\\u118e0", "\\u10404", "\\u2d54", "\\u1d7ec", "\\ufeea", "\\u3007", "\\u1040", "\\ufba7", "\\u1d77e", "\\u1d428", "\\u0ae6", "\\u118b5", "\\u1d698", "\\u104ea", "\\u0ed0", "\\u05e1", "\\u1d4f8", "\\u0647", "\\u0c82", "\\u0966", "\\u0d66", "\\u1d7e2", "\\u118d7", "\\u1d64a", "\\ufbac", "\\u1d764", "\\u1042c", "\\u1d748", "\\u2134", "\\u1d67e", "\\u0b66", "\\u041e", "\\uab3d", "\\u1ee84", "\\u1d6f0", "\\u1fbf0", "\\u0ce6", "\\u114d0", "\\u1d7d8", "\\u06d5", "\\u1d70a", "\\u1d40e", "\\u0b20", "\\u0e50", "\\u1d52c", "\\u1d594", "\\u1d616", "\\u1d5ae", "\\u03c3", "\\u043e", "\\u12d0", "\\u1d57a", "\\u1d72a", "\\u1d0f", "\\u006f", "\\u03bf", "\\u2c9e", "\\u1d560", "\\u0555", "\\u1d5e2", "\\u10516", "\\u0be6", "\\u07c0", "\\u1d6b6", "\\u1d664", "\\uff2f", "\\u1d512", "\\ufba8", "\\ufba9", "\\u1d7f6", "\\u2c9f", "\\u101d"],
@@ -98,54 +104,70 @@ def load_homoglyphs_dict()->dict:
         "x": ["\\u1d431", "\\u1d465", "\\u2a2f", "\\u1d535", "\\u1d5d1", "\\u0445", "\\u157d", "\\u1d639", "\\u1d4cd", "\\u1d499", "\\u2179", "\\u292c", "\\u1d605", "\\u00d7", "\\u166e", "\\u1d6a1", "\\uff58", "\\u1541", "\\u1d569", "\\u292b", "\\u1d59d", "\\u1d501", "\\u1d66d"],
         "y": ["\\uab5a", "\\u1eff", "\\u0443", "\\u028f", "\\u1d606", "\\u213d", "\\u1d772", "\\u04af", "\\u10e7", "\\u1d56a", "\\u1d4ce", "\\u1d6c4", "\\u1d63a", "\\uff59", "\\u1d66e", "\\u1d738", "\\u0263", "\\u1d7ac", "\\u1d502", "\\u1d466", "\\u1d6a2", "\\u03b3", "\\u1d536", "\\u1d8c", "\\u1d49a", "\\u118dc", "\\u1d432", "\\u1d59e", "\\u1d6fe", "\\u1d5d2"],
         "z": ["\\u1d49b", "\\u1d433", "\\u1d59f", "\\u1d63b", "\\u1d56b", "\\u1d607", "\\u1d537", "\\u1d22", "\\u1d4cf", "\\uab93", "\\u1d467", "\\u1d66f", "\\u1d6a3", "\\u118c4", "\\u1d503", "\\u1d5d3", "\\uff5a"]
-        }
+    }
     return dict_of_homoglyphs
 
 
-def get_non_ascii_list(input_text:str)->list:
-    result_list=[]
+def get_non_ascii_list(input_text: str) -> list:
+    result_list = []
     column = 1
     line_number = 1
     for sign in input_text:
         sign_code = ord(sign)
-        if(sign_code==10):
+        if(sign_code == 10):
             column = 1
-            line_number+=1
-        unicode_of_sign= chr(sign_code).encode('ascii', 'backslashreplace').decode("utf-8")
-        if(sign_code>127):
-            result_list.append({'unicode':unicode_of_sign, 'column':column, 'line_number':line_number})
-        column+=1
+            line_number += 1
+        unicode_of_sign = chr(sign_code).encode(
+            'ascii', 'backslashreplace').decode("utf-8")
+        if(sign_code > 127):
+            result_list.append({'unicode': unicode_of_sign,
+                               'column': column, 'line_number': line_number})
+        column += 1
     return result_list
-def find_homoglyphs(dict_of_homoglyphs:dict, list_of_non_ascii_signs):
-    list_of_homoglyphs=[]
+
+
+def find_homoglyphs(dict_of_homoglyphs: dict, list_of_non_ascii_signs):
+    list_of_homoglyphs = []
     for key, value in dict_of_homoglyphs.items():
         for non_ascii_sign in list_of_non_ascii_signs:
-            if(non_ascii_sign['unicode']in value):
-                list_of_homoglyphs.append({'original_sign':key, 'homoglyph_data':non_ascii_sign})
+            if(non_ascii_sign['unicode'] in value):
+                list_of_homoglyphs.append(
+                    {'original_sign': key, 'homoglyph_data': non_ascii_sign})
     return list_of_homoglyphs
-def get_homoglyph_prompt(homoglyph_data:list)->None:
+
+
+def get_homoglyph_prompt(homoglyph_data: list) -> None:
     for homoglyph in homoglyph_data:
-        unicode = "U+" +homoglyph["homoglyph_data"]["unicode"].split("u", 1)[1].upper()
+        codepoint = int(homoglyph["homoglyph_data"]
+                        ["unicode"].split("u", 1)[1], 16)
+        unicode = "U+" + \
+            homoglyph["homoglyph_data"]["unicode"].split("u", 1)[1].upper()
         column = homoglyph["homoglyph_data"]["column"]
         line = homoglyph["homoglyph_data"]["line_number"]
         original = homoglyph["original_sign"]
-        print(f"[FOUND HOMOGLYPH] {unicode} at line: {line}, column: {column}, did you mean sign: {original},  hex_code: '{hex(ord(original))}'")
+        hex_code = hex(ord(original))
+        original_codepoint = "U+00" + hex_code.split("x", 1)[1]
+        print(
+            f"[FOUND HOMOGLYPH] {unicode} '{chr(codepoint)}' in line: {line:2d}, column: {column:2d}. Did you mean: {original_codepoint} '{original}'?")
     pass
-def get_bidi_prompt(bidi_data:list):
+
+
+def get_bidi_prompt(bidi_data: list):
     for bidi in bidi_data:
         unicode = bidi["token_type"].replace("_", '+')
         column = bidi["column"]
         line = bidi["line_number"]
-        print(f"[FOUND BIDI] {unicode} at line: {line}, column: {column}")
+        print(f"[FOUND BIDI] {unicode} in line: {line}, column: {column}")
     pass
+
+
 def main():
     args = sys.argv[1:]
     input_data = load_file(str(args[0]))
-    get_bidi_prompt(search_for_signs(list_of_signs, input_data))
-    get_homoglyph_prompt(find_homoglyphs(load_homoglyphs_dict(), get_non_ascii_list(input_data)))
-    
+    get_bidi_prompt(search_for_signs(input_data))
+    get_homoglyph_prompt(find_homoglyphs(
+        load_homoglyphs_dict(), get_non_ascii_list(input_data)))
+
+
 if __name__ == '__main__':
     main()
-    
-
-
