@@ -117,8 +117,7 @@ def get_non_ascii_list(input_text: str) -> list:
         if(sign_code == 10):
             column = 1
             line_number += 1
-        unicode_of_sign = chr(sign_code).encode(
-            'ascii', 'backslashreplace').decode("utf-8")
+        unicode_of_sign = chr(sign_code).encode().decode("utf-8")
         if(sign_code > 127):
             result_list.append({'unicode': unicode_of_sign,
                                'column': column, 'line_number': line_number})
@@ -137,27 +136,33 @@ def find_homoglyphs(dict_of_homoglyphs: dict, list_of_non_ascii_signs):
 
 
 def get_homoglyph_prompt(homoglyph_data: list) -> None:
-    for homoglyph in homoglyph_data:
-        codepoint = int(homoglyph["homoglyph_data"]
-                        ["unicode"].split("u", 1)[1], 16)
-        unicode = "U+" + \
-            homoglyph["homoglyph_data"]["unicode"].split("u", 1)[1].upper()
-        column = homoglyph["homoglyph_data"]["column"]
-        line = homoglyph["homoglyph_data"]["line_number"]
-        original = homoglyph["original_sign"]
-        hex_code = hex(ord(original))
-        original_codepoint = "U+00" + hex_code.split("x", 1)[1]
-        print(
-            f"[FOUND HOMOGLYPH] {unicode} '{chr(codepoint)}' in line: {line:2d}, column: {column:2d}. Did you mean: {original_codepoint} '{original}'?")
+    if(homoglyph_data.__len__()==0):
+        print(f"[NO HOMOGLYPH FOUND]")
+    else:
+        for homoglyph in homoglyph_data:
+            codepoint = int(homoglyph["homoglyph_data"]
+                            ["unicode"].split("u", 1)[1], 16)
+            unicode = "U+" + \
+                homoglyph["homoglyph_data"]["unicode"].split("u", 1)[1].upper()
+            column = homoglyph["homoglyph_data"]["column"]
+            line = homoglyph["homoglyph_data"]["line_number"]
+            original = homoglyph["original_sign"]
+            hex_code = hex(ord(original))
+            original_codepoint = "U+00" + hex_code.split("x", 1)[1]
+            print(
+                f"[FOUND HOMOGLYPH] {unicode} '{chr(codepoint)}' in line: {line:2d}, column: {column:2d}. Did you mean: {original_codepoint} '{original}'?")
     pass
 
 
 def get_bidi_prompt(bidi_data: list):
-    for bidi in bidi_data:
-        unicode = bidi["token_type"].replace("_", '+')
-        column = bidi["column"]
-        line = bidi["line_number"]
-        print(f"[FOUND BIDI] {unicode} in line: {line}, column: {column}")
+    if(bidi_data.__len__()==0):
+        print(f"[NO BIDI FOUND]")
+    else:
+        for bidi in bidi_data:
+            unicode = bidi["token_type"].replace("_", '+')
+            column = bidi["column"]
+            line = bidi["line_number"]
+            print(f"[FOUND BIDI] {unicode} in line: {line}, column: {column}")
     pass
 
 
