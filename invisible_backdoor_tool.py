@@ -115,9 +115,10 @@ def get_non_ascii_list(input_text: str) -> list:
     for sign in input_text:
         sign_code = ord(sign)
         if(sign_code == 10):
-            column = 1
+            column = 0
             line_number += 1
-        unicode_of_sign = chr(sign_code).encode('ascii', 'backslashreplace').decode("utf-8")
+        unicode_of_sign = chr(sign_code).encode(
+            'ascii', 'backslashreplace').decode("utf-8")
         if(sign_code > 127):
             result_list.append({'unicode': unicode_of_sign,
                                'column': column, 'line_number': line_number})
@@ -127,8 +128,8 @@ def get_non_ascii_list(input_text: str) -> list:
 
 def find_homoglyphs(dict_of_homoglyphs: dict, list_of_non_ascii_signs):
     list_of_homoglyphs = []
-    for key, value in dict_of_homoglyphs.items():
-        for non_ascii_sign in list_of_non_ascii_signs:
+    for non_ascii_sign in list_of_non_ascii_signs:
+        for key, value in dict_of_homoglyphs.items():
             if(non_ascii_sign['unicode'] in value):
                 list_of_homoglyphs.append(
                     {'original_sign': key, 'homoglyph_data': non_ascii_sign})
@@ -136,8 +137,8 @@ def find_homoglyphs(dict_of_homoglyphs: dict, list_of_non_ascii_signs):
 
 
 def get_homoglyph_prompt(homoglyph_data: list) -> None:
-    if(homoglyph_data.__len__()==0):
-        print(f"[NO BIDI FOUND]")
+    if(homoglyph_data.__len__() == 0):
+        print(f"[NO HOMOGLYPHS FOUND]")
     else:
         for homoglyph in homoglyph_data:
             codepoint = int(homoglyph["homoglyph_data"]
@@ -155,7 +156,7 @@ def get_homoglyph_prompt(homoglyph_data: list) -> None:
 
 
 def get_bidi_prompt(bidi_data: list):
-    if(bidi_data.__len__()==0):
+    if(bidi_data.__len__() == 0):
         print(f"[NO BIDI FOUND]")
     else:
         for bidi in bidi_data:
