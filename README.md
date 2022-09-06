@@ -1,2 +1,2 @@
 # invisible-backdoors
-Python scripts to detect sussy unicode and homogliphs
+Python scripts to detect bidirectional control characters and homoglyphs.
