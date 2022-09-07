@@ -1,2 +1,2 @@
 # invisible-backdoors
-Python scripts to detect bidirectional control characters and homoglyphs.
+Python script to detect bidirectional control characters and homoglyphs.
